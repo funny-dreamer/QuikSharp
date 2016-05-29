@@ -62,6 +62,20 @@ namespace QuikSharp {
         Task<FuturesClientHolding> GetFuturesHolding(string firmId, string accId,string secCode,int posType);
        
         /// <summary>
+        /// Список всех позиций на срочном рынке (Табилца "Позиции по клиентским счетам" в Quik, "futures_client_holding" в Lua)
+        /// </summary>
+        Task<List<FuturesClientHolding>> GetFuturesHoldings();
+        /// <summary>
+        /// Лимиты на срочном рынке (Табилца "Ограничения по клиентским счетам" в Quik, "futures_client_limits" в Lua)
+        /// </summary>
+        /// <param name="allLimits"><c>true</c> - возвращаеть лимиты всех типов, <c>false</c> - только лимиты по денежным средствам. <see cref="FuturesLimitType"/></param> 
+        Task<List<FuturesLimit>> GetFuturesLimits(bool allLimits = false);
+        /// <summary>
+        /// Лимиты по денежным средствам ("Таблица лимитов по денежным средствам" в Quik, "money_limits" в Lua)
+        /// </summary>
+        Task<List<MoneyLimit2>> GetMoneyLimits();
+
+        /// <summary>
         /// функция для получения значений Таблицы текущих значений параметров
         /// </summary>
         /// <param name="classCode"></param>
@@ -198,8 +212,23 @@ namespace QuikSharp {
             return response.Data;
         }
 
+        public async Task<List<FuturesLimit>> GetFuturesLimits(bool allLimits = false)
+        {
+            var response = await QuikService.Send<Message<List<FuturesLimit>>>(new Message<string>(allLimits ? "" : "0", "get_futures_client_limits"));            
+            return response.Data;            
+        }
 
+        public async Task<List<FuturesClientHolding>> GetFuturesHoldings()
+        {
+            var response = await QuikService.Send<Message<List<FuturesClientHolding>>>(new Message<string>("futures_client_holding", "getTable"));            
+            return response.Data;
+        }
 
+        public async Task<List<MoneyLimit2>> GetMoneyLimits()
+        {
+            var response = await QuikService.Send<Message<List<MoneyLimit2>>>(new Message<string>("money_limits", "getTable"));            
+            return response.Data;            
+        }
 
         /*public async Task<ClassInfo> GetClassInfo(string classID) {
             var response = await QuikService.Send<Message<ClassInfo>>(

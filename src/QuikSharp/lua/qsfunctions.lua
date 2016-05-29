@@ -275,6 +275,36 @@ function qsfunctions.get_depo_limits(msg)
 	return msg
 end
 
+--- Возвращает табицу лимитов на срочном рынке ("Ограничения по клиентским счетам" в Quik)
+--- Если параметр не пустой, возвращает только лимиты по денежным средствам.
+function qsfunctions.get_futures_client_limits(msg)
+	local filter = msg.data
+	local count = getNumberOf("futures_client_limits")
+	local result = {}
+	for i = 0, count - 1 do
+		local item = getItem("futures_client_limits", i)
+		if filter == "" or item.limit_type == 0 then
+			table.insert(result, item)
+		end
+	end
+	msg.data = result
+	return msg
+end
+
+--- Функция для получения различных таблиц без фильтрации записей
+--- Параметр: имя таблицы (например: money_limits, futures_client_holding)
+function qsfunctions.getTable(msg)
+	local tableName = msg.data
+	local count = getNumberOf(tableName)
+	local result = {}
+	for i = 0, count - 1 do
+		local item = getItem(tableName, i)
+		table.insert(result, item)
+	end
+	msg.data = result
+	return msg
+end
+
 --------------------------
 -- Stop order functions --
 --------------------------
