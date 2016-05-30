@@ -68,8 +68,7 @@ namespace QuikSharp {
         /// <summary>
         /// Лимиты на срочном рынке (Табилца "Ограничения по клиентским счетам" в Quik, "futures_client_limits" в Lua)
         /// </summary>
-        /// <param name="allLimits"><c>true</c> - возвращаеть лимиты всех типов, <c>false</c> - только лимиты по денежным средствам. <see cref="FuturesLimitType"/></param> 
-        Task<List<FuturesLimit>> GetFuturesLimits(bool allLimits = false);
+        Task<List<FuturesLimit>> GetFuturesLimits();
         /// <summary>
         /// Лимиты по денежным средствам ("Таблица лимитов по денежным средствам" в Quik, "money_limits" в Lua)
         /// </summary>
@@ -212,9 +211,9 @@ namespace QuikSharp {
             return response.Data;
         }
 
-        public async Task<List<FuturesLimit>> GetFuturesLimits(bool allLimits = false)
+        public async Task<List<FuturesLimit>> GetFuturesLimits()
         {
-            var response = await QuikService.Send<Message<List<FuturesLimit>>>(new Message<string>(allLimits ? "" : "0", "get_futures_client_limits"));            
+            var response = await QuikService.Send<Message<List<FuturesLimit>>>(new Message<string>("futures_client_limits", "getTable"));
             return response.Data;            
         }
 

@@ -140,7 +140,9 @@
     <Compile Include="DataStructures\ClassInfo.cs" />
     <Compile Include="DataStructures\Firm.cs" />
     <Compile Include="DataStructures\FuturesClientHolding.cs" />
+    <Compile Include="DataStructures\FuturesLimit.cs" />
     <Compile Include="DataStructures\IWithLuaTimeStamp.cs" />
+    <Compile Include="DataStructures\MoneyLimit2.cs" />
     <Compile Include="DataStructures\OrderBook.cs" />
     <Compile Include="DataStructures\ParamKey.cs" />
     <Compile Include="DataStructures\ParamTable.cs" />
