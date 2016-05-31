@@ -267,7 +267,7 @@ function qsfunctions.get_depo_limits(msg)
 	local depo_limits = {}
 	for i = 0, count - 1 do
 		local depo_limit = getItem("depo_limits", i)
-		if msg.data == "" or depo_limit.sec_code == sec_code then
+		if (msg.data == "" or depo_limit.sec_code == sec_code) and depo_limit.limit_kind <= 2 then
 			table.insert(depo_limits, depo_limit)
 		end
 	end
