@@ -1,4 +1,6 @@
-﻿namespace QuikSharp.DataStructures
+﻿using Newtonsoft.Json;
+
+namespace QuikSharp.DataStructures
 {
     /// <summary>
     /// Строка таблицы "Лимиты по денежным средствам" (Lua: money_limits)
@@ -55,11 +57,9 @@
         /// </summary>
         public double leverage;
         /// <summary>
-        /// Тип лимита. Возможные значения:
-        /// «0» – обычные лимиты,
-        /// иначе – технологические лимиты
+        /// Тип лимита
         /// </summary>
-        public double limit_kind;
-
+        [JsonProperty("limit_kind")]
+        public LimitKind LimitKind;
     }
 }
