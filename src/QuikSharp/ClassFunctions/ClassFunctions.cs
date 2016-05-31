@@ -73,9 +73,9 @@ namespace QuikSharp {
         public async Task<string[]> GetClassSecurities(string classID) {
             var response = await QuikService.Send<Message<string>>(
                 (new Message<string>(classID, "getClassSecurities")));
-            return response.Data == null 
+            return string.IsNullOrEmpty(response.Data)
                 ? new string[0]
-                : response.Data.TrimEnd(',').Split(new[] { "," }, StringSplitOptions.None);
+                : response.Data.TrimEnd(',').Split(new[] { ',' }, StringSplitOptions.None);
         }
     }
 }
